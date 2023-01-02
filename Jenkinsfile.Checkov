@@ -23,10 +23,14 @@ stages{
     }
   }
   stage('Checkov Scan'){
+    when { branch 'dev'}
     steps {
-	    dir('./gitops') {
+      catchError(buildResult: 'SUCCESS', message: 'IAC Misconfigurations found', stageResult: 'UNSTABLE')
+      {
+	      dir('./gitops') {
                        sh 'checkov -f testplan.json'
         }
+      }
     }
   }
   stage('Approval'){

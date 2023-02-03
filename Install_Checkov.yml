@@ -1,4 +1,5 @@
-- hosts: {{server}}
+---
+- hosts: "{{server}}"
   become: true
   tasks:
   - name: Update and upgrade apt packages
